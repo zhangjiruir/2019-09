@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>
+<script>
+    /*
+    1.
+      基本数据类型 string number boolean null undefined
+      引用数据类型  []  {}  date  math 正则  function
+         基本数据类型 存在 栈内存 操作的是值
+         引用数据类型 存在  堆内存中 操作的是地址
+    2.
+      tyoeof  object.prototype.tostring.call()  /constructor  instanceof
+
+    3. 
+      var  let  const function/ class import
+
+    4.
+      var num = parseFloat('width:100px')
+      num ==> NaN   NaN和谁都不相等
+
+    5.
+        只弹一次 结果是9 考：for 
+        break  跳出整个循环 
+        continue  跳出本次循环
+
+    6.数组的末尾添加项
+    ary[ary.length]=100;  ary.push(100); ary.splice(n,m,x,y,z) 从索引n开始，删除m个，用xyz代替删除的项
+    删除数组的最后一项  ary.pop()  ary.length--   ary.splice(ary.length-1,1)  
+    
+    7.降序
+      ary.sort(function(a,b){
+          return b-a
+      })
+      ary.sort((a,b)=>b-a)
+
+    8. ary.slice(n-1,m-1+1)
+
+    9.var str = '2019-08-19';
+      str.replace('-','/').replace('-','/')
+      str.replace(/-/g,'/')
+
+      var str = '2019-08-19';
+      var ary =str.split('-')
+      var str2 =ary.join('/')
+      console.log(str2)
+
+    10.  [n-m]之间的随机整数
+        Math.round  四舍五入
+        Math.rsndom  [0-1)之间随机数
+         Math.round(Math.random()*(m-n)+n)
+         [2-93]
+          Math.round(Math.random()*(91)+2)
+
+    11.
+    
+
+    12. 
+       3-'1px'  => 3-NaN     0 NaN ''  null undefined 转成布尔类型是false
+
+       3+'1px'  => 31px   加号两边有一边是字符串 结果就是字符串拼接
+
+    13.获取元素
+       document.getElementById('box')
+       document.getElementsById('box')[0]
+       document.getElementsTagName('div')[0]
+       document.querySelector('#box')
+       document.querySelectorAll('#box')[0]
+
+    14.
+      1  3  8  9 nodeType
+      元素节点的 nodeType 1
+      文本节点   3
+      注释节点   8
+      根节点     9
+      哥哥节点 previousSibling
+      哥哥元素节点 previousElementSibling   不兼容ie6-8
+      // 自封过 兼容的 getBro 函数
+
+      document.body   document.documentElement
+      innerHTML   innerText
+
+      var odiv = document.createElement('div')
+      odiv.innerHTML = 'hello world'
+      document.body.appendChild(odiv)
+
+
+    15.
+
+
+    16.
+
+    17.setTimeout  setIntreval
+       claearTimeout   clearIntreval
+       setTimeout + 递归 ===>  setInterval
+       异步
+
+    18.
+      假设法
+      先排序在取值
+      Math.max(...ary)
+        
+
+    19.复制数组
+      ary.slice()
+      ary.slice(0)
+      ary.concat([])
+      // 使用for循环加push
+    
+    20.
+    // || 前面成立给前面
+    // && 前面成立给后面
+       var a = 1||0;
+       var b = 1&&0;
+       a = 1; b = 0;
+
+
+    21.
+      
+    */
+    
+
+    var str = '2019-08-19';
+      var ary =str.split('-')
+      var str2 =ary.join('/')
+      console.log(str2)
+
+    /*
+      任意数求和  arguments
+       
+
+    */
+     function sum(){
+         var t =0;
+         for(var i = 0;i<arguments.length;i++){
+             //arguments[i]  对应的是我们的每一个实参
+             //t+=arguments[i]  不考虑不合法数字
+            //  if(typeof arguments[i]=='number'&&!NaN(arguments[i])){
+            //      // 得是数字 而且还不能是NaN 才能往上累加
+            //      t+=arguments[i]
+            //  }
+            if(!isNaN(arguments[i])){
+                t += arguments[i]/1
+            }
+         }
+         return t
+     }
+    console.log(sum(1,3,'4',NaN,'qqq'))
+
+
+    function query(str){
+        // 先把 str 按照？ 拆分
+        var str2 = str.split('?')[1];
+        // 把 str2 按照 & 拆分
+        var ary = str2.solit('&');
+        // 把 ary 中的每一项 动用 = 拆分  前项为属性名 后项为属性值
+        var obj ={};
+        ary.forEach((v,i) => {
+            // v就是数组中的每一项
+            var arr = v.split('=');
+            obj[arr[0]] = arr[1]
+            
+        });
+        return obj
+    }
+
+
+    function fn(){
+        var str = '大字符串';
+        var s = '';
+        while (s.length<4){
+            var n = Math.round(Math.random()*61)
+            if(s.indexOf(str[n])==-1){
+                s += str[n]
+            }
+        }
+        return s
+    }
+
+    var olis = document.getElementsByTagName('li')
+    var col = '';
+    for(var i =0;i<olis.length;i++){
+        olis[i].style.background = i%2? 'blue':'green';
+        olis[i].onmouseenter = function(){
+            col = this.style.background
+            this.style.background = 'black'
+        }
+        olis[i].onmouseleave =function(){
+            this.style.background= col
+        }
+        olis[i].onclick = function(){
+            alert(`我是第${this.myindex+1}个`)
+        }
+    }
+</script>
