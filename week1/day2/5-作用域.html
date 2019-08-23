@@ -49,12 +49,12 @@
     console.log(a)//12  全局的这个a和私有的a没有关系
 
     var b =10;
-    var f2 = function(b){
+    var f2 = function(){
         console.log(b);//10
         b = 200;
         console.log(b)//200
     }
-    f2(100)
+    f2()
     console.log(b)//200
 
     var f3 =function(c){
