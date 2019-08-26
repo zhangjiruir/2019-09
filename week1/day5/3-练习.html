@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="btnBox">
+        <input type="button" value="button_1" />
+        <input type="button" value="button_2" />
+        <input type="button" value="button_3" />
+        <input type="button" value="button_4" />
+        <input type="button" value="button_5" />
+    </div>
+    
+    <script type="text/javascript">
+        var btnBox=document.getElementById('btnBox'),
+            inputs=btnBox.getElementsByTagName('input');
+        var l=inputs.length;
+        // 事件的循环绑定问题
+        // for(let i=0;i<l;i++){
+        //     inputs[i].onclick=function(){
+        //         alert(i+1);
+        //     }
+        // }
+
+        for(var i = 0; i < inputs.length; i++){
+        inputs[i].onclick=function(){
+            alert(i);
+        }
+    }/* 
+    inputs[0].onclick=function(){
+        alert(i);
+    }
+    ...
+    inputs[4].onclick=function(){
+        alert(i);
+    }
+    
+    */
+    // inputs[0].onclick=function(){
+    //     alert(0);
+    // }
+    // inputs[1].onclick=function(){
+    //     alert(1);
+    // }
+    // inputs[2].onclick=function(){
+    //     alert(2);
+    // }
+    // inputs[3].onclick=function(){
+    //     alert(3);
+    // }
+    // inputs[4].onclick=function(){
+    //     alert(4);
+    // }
+
+    </script>
+</body>
+</html>
