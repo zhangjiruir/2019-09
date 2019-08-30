@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    // typeof Object.prototaltype.toString.call() constructor instanceof
+    var ary = [];
+
+    // instanceof 就是查看 ary 在不在对应的原型链上；
+    // ary 链到 基类的原型； 看 Array 在不在这条链上
+    ary instanceof Array //true
+    ary instanceof Number // false
+    // 任何引用数据类型 instanceof Object 都是true
+
+    // 值类型 instanceof    xxxx 都是 false
+
+    //查看是否是私有属性
+    //hasownproperty
+    var ary = [];
+    ary.qqq = 123;
+    ary.hasOwnProperty('qqq');
+
+    // 查看是否是某个对象的属性
+    // in
+    var ary = [];
+    'push' in ary//true
+    'hasOwnProperty' in ary //true 
+
+    // 判断是否共有的方法？ 一首先需要他的属性（in）  二是不能私有属性（hasOwnProperty）
+    Object.prototype.hasOwnProperty = function(){
+        // 怎么拿到'push' ary??
+        // key ===>  'push'
+        // this ===> ary
+        if((key in this) && !this.hasOwnProperty(key)){
+            return true
+        }
+        return false
+    }
+    ary.hasOwnProperty('push');//true
+
+    // 判断数据类型方法
+
+   
+    Object.prototype.myType = function(){
+        var str = Object.prototype.toString.call(this);//'[object array]'
+        var str2 = str.slice(8,str.length-1);
+        var str3 = str2.toLowerCase();
+        return str3;
+    }
+    ary.myType();//'array'
+    ''.myType();//'string'
+
+    // plus minus
+
+    Number.prototype.plus = function(n){
+        return this+n
+    }
+    Number.prototype.minus =function(n){
+        return this-n
+    }
+    var a = 10;
+    a.plus(1).minus(2).plus(20)//10+1-2+20
+    // 为什么可以使用链式调用
+    // 原因是 前面的函数执行的返回结果 可以调用到后面的函数
+
+    var ary = [];
+    ary.concat(1,2,3).push(4).plus(10)
+    
+</script>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // 原型模式比构造函数模式 多了一个 原型
+    // 原型是每一个函数 都有的默认属性  对应的值是一个对象
+
+    /*
+      每一个函数（类） 都有一个天生自带的 prototype 属性，指向自己的原型
+      每一个实例（对象） 都有一个天生自带的__proto__ 属性，指向所属类的原型
+      每一个默认的原型，都有一个 constructor 属性，指向函数构造本身
+    */
+
+    /*
+       作用域链： 变量的查找机制
+       原型链：   属性的查找机制，当某个对象调用某个属性时，先去自己身上查找，没有的话再去所属类的原型上查找，在没有，就再去原型的上级原型查找，直到找到基类为止，还没有的话，值就是 undefined    
+    */
+
+    function person(name,age){
+        this.name = name;
+        this.age = age;
+        this.eat =function(){}
+        this.play=function(){}
+    }
+ 
+    person.prototype.eat =function(){}
+    person.prototype.play =function(){}
+    var per1 = new person('张三',22);
+    per1.eat()
+
+
+</script>

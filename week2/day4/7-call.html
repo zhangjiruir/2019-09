@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // call 改变函数执行时 内部的this 指向
+    // call 第一个参数用函数执行时 this 指向；后边参数都是传给 前边函数的实参
+    function fn(){
+        console.log(arguments);
+        console.log(this)
+    }
+
+    var obj ={
+        f:fn
+    }
+    // 类数组转数组 [...arguments]  Array.from(arguments)  [].slice.call(arguments)
+    obj.f(1,1,1);// 1 1 1;obj
+    fn(2,2,2)// 2 2 2;window
+    obj.f.call(Array,3,3,3)// 3 3 3 ;Array
+    fn.call(obj,4,4,4)//4 4 4 ;obj
+
+
+    // apply  用法类似于call 但是第二个参数是一个集合（数组或者类数组）
+    // 函数执行时 还是散乱的接受的
+    fn.apply(obj,[6,6,6]);
+    Math.max.apply(Math,[3,4,5,4,35,1,546,459,1,22]);
+    Math.max(...[3,1,4,5,4,5,5,5,4,8,4,258,]);
+
+    // myCall  使用方法类似于 call；
+    Function.prototype.myCall = function(context,...ary){
+        // 让 fn执行
+        // fn 中的 this 得改成 obj
+        // myCall 执行时 得把 6,6,6传给fn
+        // this ===> fn
+        // this(...ary);
+
+        // 怎么保证一个函数执行时 上下文是 context
+        // context.qqq() // qqq执行时 里面的this 就是 context
+        
+        var key = Symbol();
+        context[key] = this ;
+        context[key](...ary);
+        delete context[key];
+    }
+    fn.myCall(obj,6,6,6)
+
+
+    // bind 的用法和 call一模一样  只是不让函数立即执行的，而是返回一个新的函数
+    // 新函数执行时  里边的this会改变成指定的对象
+    var fn2 = fn.bind(obj,6,6,6);
+    console.log(fn2);
+    fn2();// 让fn执行了，并且把 fn中的this该成了 obj；还把6,6,6传给了 fn
+
+
+    // 封装 mybind
+    // Function.prototype.mybind = function(context,...ary){
+    //    var _this = this;
+    //    return function(...arr){
+    //       return _this.call(context,...ary,...arr)
+    //    }
+    // }
+
+    Function.prototype.mybind = function(context,...ary){
+        // this ===> fn
+        return (...arr)=>this.call(context,...ary,...arr)
+        // 箭头函数中的this 是上级作用域的this 也就是咱们的fn
+        // 为了保证这个函数中的 this 是fn；才选择使用了箭头函数
+        // 箭头函数中的 this 是找上级作用域中的 this
+    }
+    var fn3 = fn.mybind(obj,6,6,6);
+    fn3(3,3,3)
+
+    // 使用bind更改之后的函数 this指向不会再去做任何更改
+    var fn5 = fn.bind(obj,3,3);// fn5 是通过 修改 fn中的this之后得到的函数 
+    var fn6 = fn5.bind(Array,6,6);// fn6 是通过修改 fn5 中的this之后得到的函数
+    fn5();//obj
+    fn6();//obj
+</script>
