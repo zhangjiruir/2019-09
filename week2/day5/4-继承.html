@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // 继承 就是 子类 继承 父类上的属性
+    function Fn(){}
+    Fn.prototype = new Array();//Fn 类 继承了 Array 的共用方法
+    var f = new Fn();
+    console.log(f.pop)
+
+    // call 继承
+    function Person(name,age){
+        this.name = name;
+        this.age = age;
+    }
+    Person.prototype.eat = function(){}
+
+    function Child(name,age,toy){
+        Person.call(this,name,age);//让 person 函数执行，并且把 person 执行时中的this改成了  当前child的this；那么 person中的 this.name this.age 就变成了child中的this.name和this.age
+        this.toy = toy;
+    }
+    // Child.prototype = Person.prototype;// 小孩类的原型直接改成了 人类的原型；这样 人类的共有属性 小孩类也就有了
+    // Child.prototype = new Person();// 小孩的原型直接改成了 人类的一个实例
+    Child.prototype = Object.create(Person.prototype);
+    //Object.create(Person.prototype);  返回值是一个空对象 但是这个空对象的__proto__执行person的原型
+    Child.prototype.sleep = function(){}
+    var xm = new Child('小明',20,'挖掘机')
+    console.log(xm)
+    // 寄生组合式 继承
+</script>
