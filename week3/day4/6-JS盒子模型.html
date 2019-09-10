@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+   #box{
+       width: 400px;
+       height: 400px;
+       background: #ccc;
+       padding: 10px;
+       border: 20px dashed darkcyan;
+       margin: 30px auto
+   }
+</style>
+<body>
+    <div id="box">
+        JS 盒子模型的三个系列  client offset scroll
+        JS 盒子模型的三个系列  client offset scroll
+        JS 盒子模型的三个系列  client offset scroll
+        JS 盒子模型的三个系列  client offset scroll
+        JS 盒子模型的三个系列  client offset scroll
+        JS 盒子模型的三个系列  client offset scroll
+        JS 盒子模型的三个系列  client offset scroll
+        JS 盒子模型的三个系列  client offset scroll
+        JS 盒子模型的三个系列  client offset scroll
+    </div>
+</body>
+</html>
+<script>
+    var box = document.getElementById('box');
+    // JS 盒子模型
+    // JS 盒子模型的三个系列  client offset scroll
+
+    // client  系列
+    console.log(box.clientWidth)  // width + 左右 padding
+    console.log(box.clientHeight)
+    console.log(box.clientLeft)// 左 border
+    console.log(box.clientTop)// 上 border
+
+    
+    // offset 系列
+    console.log(box.offsetWidth) //clientwidth + 左右border
+    console.log(box.offsetHeight) 
+    console.log(box.offsetLeft) // 当前盒子的外边框到上级参照物的内边框的距离
+    console.log(box.offsetTop) 
+    console.log(box.offsetParent) // 上级参照物 有定位的上级元素
+    // 上级参照物最多到body  body的上级参照物是 null；
+    function offset(ele){
+        // 获取该元素 到body的上 和 左的距离
+        var temp = ele.offsetParent;
+        var obj ={
+            left:ele.offsetLeft,
+            top:ele.offsetTop
+        }
+        while (temp){
+            obj.left += temp.offsetLeft +temp.clientLeft;
+            obj.top += temp.offsetTop +temp.clientTop;
+            temp = temp.offsetParent;
+        }
+        return obj
+    }
+
+    // scroll 系列  
+    // 内容不溢出 等同于 clientwidth
+    // 内容溢出时  但是没有 overflow 属性 ，盒子的上padding +内容的高度
+    // 内容溢出 但是有overflower 属性  盒子的上下padding+内容的高度
+    console.log(box.scrollWidth)
+    console.log(box.scrollHeight)
+    console.log(box.scrollTop)// 内容卷起来的高度
+    console.log(box.scrollLeft)// 卷去内容的宽度
+
+
+    // 以上13个属性 只有 scrollTop scrollLeft  是可以设置的 其他的都是只读属性
+    // scrollTop  scrollLeft  有边界值
+    
+</script>

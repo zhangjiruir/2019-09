@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    var reg = /\d+?/;
+    var str = '珠峰2019珠峰2020';
+    var res =reg.exec(str);// 返回值是个数组，第一项是大正则捕获到的内容 第二项开始都是小分组捕获的内容
+    console.log(res)
+
+    // 捕获的贪婪性  一次性会把所有符合正则的内容捕获到  加一个元字符  ？
+    // 捕获的懒惰性  只捕获一次；                      加一个修饰符  g
+
+
+    var reg = /\d+/g;
+    var str = '珠峰2019珠峰2020';
+    var res = reg.exec(str);// lastIndex 属性  下一次捕获的起始索引
+
+    // 封装一个 可以一次那个捕获所有符合条件的内容 的方法 execAll；
+    RegExp.prototype.execAll = function(str){
+        // 利用 exec 可以一直匹配 直到匹配到 null
+        // this 就是 reg
+        var that = this;
+        if(!that.global){
+            // 没有全局修饰符 g
+            tnat = eval(that.toString()+'g');//
+        }
+        var res = that.exec(str);
+        var ary = [];
+        while(res){
+            ary.push(res);
+            res = that.exec(str)
+        }
+        //ary.push(res);
+        return ary
+    }
+    var res =reg.execAll(str);
+    console.log(res)
+
+    // 封装一个getCookie 的方法 使用 execAll getCookie 位于字符串的原型
+    String.prototype.getCookie = function(key){
+       var reg = /([^; =]+)=([^; =])/g;
+       var ary = reg.execAll(this);
+       console.log(ary)
+       // 把数组 ary 中的每一项 转成对象的格式
+       var obj = {};
+       ary.forEach(item => {
+           // item 代表数组中的每一项； 都是一个小数组
+           obj[item[1]] = item[2];  
+       });
+       console.log(obj)
+       return key ? obj[key]:obj;
+    }
+    var cookie = "BAIDUID=9B829191D625C84FD1FCA4C7D7D0F57A:FG=1; BIDUPSID=9B829191D625C84FD1FCA4C7D7D0F57A; PSTM=1567440705; BD_UPN=12314753; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598; cflag=13%3A3; pgv_pvi=1206163456; B64_BOT=1; BD_HOME=1; H_PS_PSSID=1447_21079_29523_29520_29721_29567_29220_26350"
+    cookie.getCookie(); //{}
+    cookie.getCookie('BAIDUID')// 9B829191D625C84FD1FCA4C7D7D0F57A
+    
+</script>

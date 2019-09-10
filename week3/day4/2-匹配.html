@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+     h3{
+         display: none
+     }
+    </style>
+</head>
+<body>
+    <input type="number" id="inp">
+    <h3>手机号不合法</h3>
+</body>
+</html>
+<script>
+     // 手机号匹配
+     // 1开头 第一位是 1 第二位是 3，4，5，6，7，8，9   其他不限
+     var reg =/^1[3456789]\d{9}$/
+     var inp = document.querySelector('#inp');
+     var h3 = document.querySelector('h3');
+     inp.oninput = function () {
+            // 只要输入 里面的内容发生改变就会触发该函数
+            console.log(this.value)
+            var str = this.value;
+            if (str.length == 11) {
+                if (!reg.test(str)) {
+                    h3.style.display = 'block'
+                } else {
+                    h3.style.display = 'none'
+                }
+            }else if(str.length > 11){
+                h3.style.display = 'none'
+            }
+        }
+
+    // QQ 号匹配  qq邮箱匹配
+    // 5-12位  开头不能是0
+    var reg = /^[1-9]\d{4，11}$/
+    var reg = /^[1-9]\d{4，11}@qq\.com$/
+
+    var str ='小明1234邮箱是134223@qq.com';
+    var reg = /(\d+)@qq/
+
+    // 身份证匹配
+    var reg = /^[1-9]\d{5}\d{4}\d{2}\d{2}\d{3}(\d|x)$/
+
+    var str = '这个人的身份证是 130981200808080000'
+    
+    // 重组一句话 这个人的出生年月是  2008年8月8日  性别是男；
+    var str2 = str.replace(/.+\d{6}(\d{4})(\d{2})(\d{2})\d{2}(\d)(\d|X)/,function(...arg){
+        return `这个人的出生年月是${arg[1]}年${arg[2]}月${arg[3]}日  性别是${arg[4]%2 ? '男':'女'}`
+    })
+    console.log(str2)
+
+
+    //  有效数字
+    //  有可能会出现 +-
+    //  整数部分 多位数时 首位不能是 0
+    //  小数部分可有可无
+    var reg =/^[-+]?([1-9]\d|\d)+(\.\d+)?$/
+</script>
